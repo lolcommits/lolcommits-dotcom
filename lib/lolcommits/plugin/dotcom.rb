@@ -1,12 +1,11 @@
-require 'rest_client'
-require 'base64'
+require 'rest-client'
 require 'lolcommits/plugin/base'
 
 module Lolcommits
   module Plugin
     class Dotcom < Base
 
-      attr_accessor :endpoint
+      BASE_URL = 'http://lolcommits-dot-com.herokuapp.com'.freeze
 
       ##
       # Initialize plugin with runner, config and set all configurable options.
@@ -41,54 +40,62 @@ module Lolcommits
       # @return [Boolean] true/false indicating if plugin is configured
       #
       def configured?
-        !!(!configuration['enabled'].nil? && configuration['endpoint'])
+        !configuration.values.empty? &&
+          configuration.values.all? { |value| !value.nil? }
       end
 
       ##
       # Returns true/false indicating if the plugin has been correctly
-      # configured. The `endpoint` option must be set with a URL beginning with
-      # http(s)://
+      # configured. All options must be set with 32 character alphanumeric keys.
       #
       # @return [Boolean] true/false indicating if plugin is correctly
       # configured
       #
       def valid_configuration?
-        !!(configuration['endpoint'] =~ /^http(s)?:\/\//)
+        plugin_options.all? do |option|
+          configuration[option] =~ /^([a-z]|[0-9]){32}$/
+        end
       end
 
       ##
       # Post-capture hook, runs after lolcommits captures a snapshot. Uploads
-      # the lolcommit image to the remote server with an optional Authorization
-      # header and the following request params.
+      # the lolcommit to the dot-com server with the following multi-part POST
+      # body params (JSON encoded):
       #
-      # `file`    - captured lolcommit image file
-      # `message` - the commit message
-      # `repo`    - repository name e.g. mroth/lolcommits
-      # `sha`     - commit SHA
-      # `key`     - key (string) from plugin configuration (optional)
-      # `author_name` - the commit author name
-      # `author_email` - the commit author email address
+      # `t` - timestamp, seconds since epoch
+      # `token` - hex digest of `api_secret` from plugin config and timestamp
+      # `key` - `api_key` from plugin config
+      # `git_commit` - a hash with these params:
       #
-      # @return [RestClient::Response] response object frm POST request
+      #   `sha` - the commit sha
+      #   `repo_external_id` - the `repo_id` from plugin config
+      #   `image` - the lolcommit image file (processed)
+      #   `raw` - the original captured camera image
+      #
+      # @return [HTTParty::Response] response object from POST request
       # @return [Nil] if any error occurs
       #
       def run_capture_ready
-        debug "Posting capture to #{configuration['endpoint']}"
+        debug "Posting capture to #{BASE_URL}"
+        t = Time.now.to_i.to_s
+
         RestClient.post(
-          configuration['endpoint'],
+          "#{BASE_URL}/git_commits.json",
           {
-            file: File.new(runner.main_image),
-            message: runner.message,
-            repo: runner.vcs_info.repo,
-            author_name: runner.vcs_info.author_name,
-            author_email: runner.vcs_info.author_email,
-            sha: runner.sha,
-            key: configuration['optional_key']
-          },
-          Authorization: authorization_header
+            git_commit: {
+              sha: runner.sha,
+              repo_external_id: configuration['repo_id'],
+              image: File.open(runner.main_image),
+              raw: File.open(runner.snapshot_loc)
+            },
+            key: configuration['api_key'],
+            t: t,
+            token: Digest::SHA1.hexdigest(configuration['api_secret'] + t)
+          }
         )
       rescue => e
-        log_error(e, "ERROR: RestClient POST FAILED #{e.class} - #{e.message}")
+        log_error(e, "ERROR: HTTParty POST FAILED #{e.class} - #{e.message}")
+        return nil
       end
 
 
@@ -100,27 +107,7 @@ module Lolcommits
       # @return [Array] the option names
       #
       def plugin_options
-        %w(
-          endpoint
-          optional_key
-          optional_http_auth_username
-          optional_http_auth_password
-        )
-      end
-
-      ##
-      # Builds an HTTP basic auth header from plugin options. If both the
-      # username and password options are empty nil is returned.
-      #
-      # @return [String] the HTTP basic auth header string (Base64 encoded u:p)
-      # @return [Nil] if no username or password option set
-      #
-      def authorization_header
-        user     = configuration['optional_http_auth_username']
-        password = configuration['optional_http_auth_password']
-        return unless user || password
-
-        'Basic ' + Base64.encode64("#{user}:#{password}").chomp
+        %w(api_key api_secret repo_id)
       end
     end
   end
