@@ -33,7 +33,7 @@ After installing the lolcommits gem, install this plugin with:
 Sign up (for free) [here](http://lolcommits-dot-com.herokuapp.com) (via GitHub).
 From the top menu, click 'New Repo' (give your repository a name). Then click
 '[Account Info](http://lolcommits-dot-com.herokuapp.com/users/account)' to see
-the keys you'll need to configure the gem
+the keys you'll need to configure the gem.
 
 Then configure to enable and set these keys:
 
