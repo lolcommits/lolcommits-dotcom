@@ -12,7 +12,10 @@ blame has never been so much fun!
 
 [lolcommits-dot-com](http://lolcommits-dot-com.herokuapp.com) is web app hosting
 lolcommits for multiple repositories! You can signup for free via GitHub. This
-plugin integrates your lolcommits gem with the website.
+plugin integrates your lolcommits gem with the website. The app itself has been
+open-sourced and lives on
+[GitHub](https://github.com/lolcommits/lolcommits-dot-com), pull-requests are
+welcome!
 
 ## Requirements
 
