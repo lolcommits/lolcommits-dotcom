@@ -10,19 +10,9 @@
 every time you git commit code, and archives a lolcat style image with it. Git
 blame has never been so much fun!
 
-This plugin uploads each lolcommit to a remote server after capturing. You
-configure the plugin by setting a remote endpoint to handle the HTTP post
-request. The following params will be sent:
-
-* `file` - captured lolcommit image file
-* `message` - the commit message
-* `repo` - repository name e.g. mroth/lolcommits
-* `sha` - commit SHA
-* `author_name` - the commit author name
-* `author_email` - the commit author email address
-* `key` - optional key (string) from plugin config
-
-You can also set an optional HTTP Basic Auth header (username and/or password).
+[lolcommits-dot-com](http://lolcommits-dot-com.herokuapp.com) is web app hosting
+lolcommits for multiple repositories! You can signup for free via GitHub. This
+plugin integrates your lolcommits gem with the website.
 
 ## Requirements
 
@@ -37,15 +27,19 @@ After installing the lolcommits gem, install this plugin with:
 
     $ gem install lolcommits-dotcom
 
-Then configure to enable and set the remote endpoint:
+Sign up (for free) [here](http://lolcommits-dot-com.herokuapp.com) (via GitHub).
+From the top menu, click 'New Repo' (give your repository a name). Then click
+'[Account Info](http://lolcommits-dot-com.herokuapp.com/users/account)' to see
+the keys you'll need to configure the gem
+
+Then configure to enable and set these keys:
 
     $ lolcommits --config -p dotcom
     # set enabled to `true`
-    # set the remote endpoint (must begin with http(s)://)
-    # optionally set a key (sent in params) and/or HTTP Basic Auth credentials
+    # paste your api key, secret api and repo (external) id
 
-That's it! Provided the endpoint responds correctly, your next lolcommit will be
-uploaded to it. To disable use:
+That's it! Your next lolcommit will be sent to
+[lolcommits-dot-com](http://lolcommits-dot-com.herokuapp.com). To disable use:
 
     $ lolcommits --config -p dotcom
     # and set enabled to `false`
@@ -58,6 +52,18 @@ report.
 
 You can also run `bin/console` for an interactive prompt that will allow you to
 experiment with the gem code.
+
+After capturing every lolcommit is uploaded to the `/git_commits.json` endpoint
+with the following multi-part POST body params (JSON encoded):
+
+* `t` - timestamp, seconds since epoch
+* `token` - hex digest of `api_secret` from plugin config and timestamp
+* `key` - `api_key` from plugin config
+* `git_commit` - a hash with these params:
+  * `sha` - the commit sha
+  * `repo_external_id` - the `repo_id` from plugin config
+  * `image` - the lolcommit image file (processed)
+  * `raw` - the original captured camera image
 
 ## Tests
 
