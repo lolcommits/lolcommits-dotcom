@@ -16,15 +16,6 @@ module Lolcommits
       end
 
       ##
-      # Returns the name of the plugin to identify the plugin to lolcommits.
-      #
-      # @return [String] the plugin name
-      #
-      def self.name
-        'dotcom'
-      end
-
-      ##
       # Returns position(s) of when this plugin should run during the capture
       # process. Uploading happens when a new capture is ready.
       #
@@ -32,16 +23,6 @@ module Lolcommits
       #
       def self.runner_order
         [:capture_ready]
-      end
-
-      ##
-      # Returns true if the plugin has been configured.
-      #
-      # @return [Boolean] true/false indicating if plugin is configured
-      #
-      def configured?
-        !configuration.values.empty? &&
-          configuration.values.all? { |value| !value.nil? }
       end
 
       ##
@@ -84,13 +65,13 @@ module Lolcommits
           {
             git_commit: {
               sha: runner.sha,
-              repo_external_id: configuration['repo_id'],
+              repo_external_id: configuration[:repo_id],
               image: File.open(runner.main_image),
               raw: File.open(runner.snapshot_loc)
             },
-            key: configuration['api_key'],
+            key: configuration[:api_key],
             t: t,
-            token: Digest::SHA1.hexdigest(configuration['api_secret'] + t)
+            token: Digest::SHA1.hexdigest(configuration[:api_secret] + t)
           }
         )
       rescue => e
@@ -107,7 +88,7 @@ module Lolcommits
       # @return [Array] the option names
       #
       def plugin_options
-        %w(api_key api_secret repo_id)
+        [:api_key, :api_secret, :repo_id]
       end
     end
   end
