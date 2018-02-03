@@ -43,7 +43,7 @@ Then configure to enable and set these keys:
     # paste your api key, secret api and repo (external) id
 
 That's it! Your next lolcommit will be sent to
-[lolcommits-dot-com](https://lolcommits.com). To disable use:
+[lolcommits.com](https://lolcommits.com). To disable use:
 
     $ lolcommits --config -p dotcom
     # and set enabled to `false`
