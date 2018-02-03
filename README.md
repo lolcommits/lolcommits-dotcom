@@ -10,9 +10,9 @@
 every time you git commit code, and archives a lolcat style image with it. Git
 blame has never been so much fun!
 
-[lolcommits-dot-com](http://lolcommits-dot-com.herokuapp.com) is web app hosting
-lolcommits for multiple repositories! You can signup for free via GitHub. This
-plugin integrates your lolcommits gem with the website. The app itself has been
+[lolcommits.com](https://lolcommits.com) is web app hosting lolcommits for
+multiple repositories! You can signup for free via GitHub. This plugin
+integrates your lolcommits gem with the website. The app itself has been
 open-sourced and lives on
 [GitHub](https://github.com/lolcommits/lolcommits-dot-com), pull-requests are
 welcome!
@@ -30,10 +30,11 @@ After installing the lolcommits gem, install this plugin with:
 
     $ gem install lolcommits-dotcom
 
-Sign up (for free) [here](http://lolcommits-dot-com.herokuapp.com) (via GitHub).
+Sign up (for free) [here](https://lolcommits.com) (via GitHub).
+
 From the top menu, click 'New Repo' (give your repository a name). Then click
-'[Account Info](http://lolcommits-dot-com.herokuapp.com/users/account)' to see
-the keys you'll need to configure the gem.
+'[Account Info](https://lolcommits.com/users/account)' to see the keys you'll
+need to configure the gem.
 
 Then configure to enable and set these keys:
 
@@ -42,7 +43,7 @@ Then configure to enable and set these keys:
     # paste your api key, secret api and repo (external) id
 
 That's it! Your next lolcommit will be sent to
-[lolcommits-dot-com](http://lolcommits-dot-com.herokuapp.com). To disable use:
+[lolcommits-dot-com](https://lolcommits.com). To disable use:
 
     $ lolcommits --config -p dotcom
     # and set enabled to `false`

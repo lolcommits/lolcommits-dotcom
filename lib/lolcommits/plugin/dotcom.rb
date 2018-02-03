@@ -5,7 +5,7 @@ module Lolcommits
   module Plugin
     class Dotcom < Base
 
-      BASE_URL = 'http://lolcommits-dot-com.herokuapp.com'.freeze
+      BASE_URL = 'https://lolcommits.com'.freeze
 
       ##
       # Initialize plugin with runner, config and set all configurable options.

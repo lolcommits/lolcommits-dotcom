@@ -57,18 +57,18 @@ describe Lolcommits::Plugin::Dotcom do
       it "uploads lolcommits to dot com server endpoint" do
         in_repo do
           plugin.configuration = valid_enabled_config
-          stub_request(:post, /^http\:\/\/lolcommits-dot-com.herokuapp.com/).to_return(status: 200)
+          stub_request(:post, /^https\:\/\/lolcommits.com/).to_return(status: 200)
 
           plugin.run_capture_ready
 
           assert_requested :post,
-            "http://lolcommits-dot-com.herokuapp.com/git_commits.json",
+            "https://lolcommits.com/git_commits.json",
             times: 1,
             headers: {'Content-Type' => /multipart\/form-data/ } do |req|
               req.body.must_match 'name="git_commit[sha]"'
               req.body.must_match 'name="git_commit[repo_external_id]"'
-              req.body.must_match /Content-Disposition: form-data;.+name="git_commit\[image\]"; filename="main_image.jpg.+"/
-              req.body.must_match /Content-Disposition: form-data;.+name="git_commit\[raw\]"; filename="snapshot_loc.jpg.+"/
+              req.body.must_match(/Content-Disposition: form-data;.+name="git_commit\[image\]"; filename="main_image.jpg.+"/)
+              req.body.must_match(/Content-Disposition: form-data;.+name="git_commit\[raw\]"; filename="snapshot_loc.jpg.+"/)
               req.body.must_match 'name="key"'
               req.body.must_match 'name="t"'
               req.body.must_match 'name="token"'
