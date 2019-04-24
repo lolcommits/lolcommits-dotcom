@@ -1,22 +1,20 @@
-# coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'lolcommits/dotcom/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "lolcommits-dotcom"
-  spec.version       = Lolcommits::Dotcom::VERSION
-  spec.authors       = ["Matthew Hutchinson"]
-  spec.email         = ["matt@hiddenloop.com"]
-  spec.summary       = %q{Uploads lolcommits to a remote server}
+  spec.name     = "lolcommits-dotcom"
+  spec.version  = Lolcommits::Dotcom::VERSION
+  spec.authors  = ["Matthew Hutchinson"]
+  spec.email    = ["matt@hiddenloop.com"]
+  spec.summary  = %q{Uploads lolcommits to a remote server}
+  spec.homepage = "https://github.com/lolcommits/lolcommits-dotcom"
+  spec.license  = "LGPL-3"
 
-  spec.description = <<-EOF
+  spec.description = <<-DESC
   Uploads lolcommits to a remote server, with optional key or  HTTP based
   authentication.
-  EOF
-
-  spec.homepage      = "https://github.com/lolcommits/lolcommits-dotcom"
-  spec.license       = "LGPL-3"
+  DESC
 
   spec.metadata = {
     "homepage_uri"    => "https://github.com/lolcommits/lolcommits-dotcom",
