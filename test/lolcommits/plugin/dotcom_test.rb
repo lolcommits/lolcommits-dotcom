@@ -12,8 +12,7 @@ describe Lolcommits::Plugin::Dotcom do
     def runner
       # a simple lolcommits runner with an empty configuration Hash
       @runner ||= Lolcommits::Runner.new(
-        main_image: Tempfile.new('main_image.jpg'),
-        snapshot_loc: Tempfile.new('snapshot_loc.jpg'),
+        lolcommit_path: Tempfile.new('lolcommit.jpg'),
       )
     end
 
@@ -65,8 +64,7 @@ describe Lolcommits::Plugin::Dotcom do
             headers: {'Content-Type' => /multipart\/form-data/ } do |req|
               req.body.must_match 'name="git_commit[sha]"'
               req.body.must_match 'name="git_commit[repo_external_id]"'
-              req.body.must_match(/Content-Disposition: form-data;.+name="git_commit\[image\]"; filename="main_image.jpg.+"/)
-              req.body.must_match(/Content-Disposition: form-data;.+name="git_commit\[raw\]"; filename="snapshot_loc.jpg.+"/)
+              req.body.must_match(/Content-Disposition: form-data;.+name="git_commit\[image\]"; filename="lolcommit.jpg.+"/)
               req.body.must_match 'name="key"'
               req.body.must_match 'name="t"'
               req.body.must_match 'name="token"'

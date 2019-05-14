@@ -43,7 +43,6 @@ module Lolcommits
       #   `sha` - the commit sha
       #   `repo_external_id` - the `repo_id` from plugin config
       #   `image` - the lolcommit image file (processed)
-      #   `raw` - the original captured camera image
       #
       # @return [HTTParty::Response] response object from POST request
       # @return [Nil] if any error occurs
@@ -58,8 +57,7 @@ module Lolcommits
             git_commit: {
               sha: runner.sha,
               repo_external_id: configuration[:repo_id],
-              image: File.open(runner.main_image),
-              raw: File.open(runner.snapshot_loc)
+              image: File.open(runner.lolcommit_path),
             },
             key: configuration[:api_key],
             t: t,
