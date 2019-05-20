@@ -9,6 +9,11 @@ project adheres to [Semantic Versioning][Semver].
 
 - Your contribution here!
 
+## [0.3.1] - 2019-05-20
+### Changed
+- updated gemspec and README
+- Requires at least lolcommits >= `0.14.2`
+
 ## [0.3.0] - 2019-05-14
 ### Changed
 - lolcommits gem is a runtime dependency
@@ -59,7 +64,8 @@ project adheres to [Semantic Versioning][Semver].
 ### Changed
 - Initial release
 
-[Unreleased]: https://github.com/lolcommits/lolcommits-dotcom/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/lolcommits/lolcommits-dotcom/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/lolcommits/lolcommits-dotcom/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/lolcommits/lolcommits-dotcom/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/lolcommits/lolcommits-dotcom/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/lolcommits/lolcommits-dotcom/compare/v0.1.0...v0.1.1
