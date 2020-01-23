@@ -31,19 +31,19 @@ describe Lolcommits::Plugin::Dotcom do
 
     describe "initalizing" do
       it "assigns runner and all plugin options" do
-        plugin.runner.must_equal runner
-        plugin.options.must_equal [:enabled, :api_key, :api_secret, :repo_id]
+        _(plugin.runner).must_equal runner
+        _(plugin.options).must_equal [:enabled, :api_key, :api_secret, :repo_id]
       end
     end
 
     describe "#enabled?" do
       it "is false by default" do
-        plugin.enabled?.must_equal false
+        _(plugin.enabled?).must_equal false
       end
 
       it "is true when configured" do
         plugin.configuration = valid_enabled_config
-        plugin.enabled?.must_equal true
+        _(plugin.enabled?).must_equal true
       end
     end
 
@@ -62,14 +62,14 @@ describe Lolcommits::Plugin::Dotcom do
             "https://lolcommits.com/git_commits.json",
             times: 1,
             headers: {'Content-Type' => /multipart\/form-data/ } do |req|
-              req.body.must_match 'name="git_commit[sha]"'
-              req.body.must_match 'name="git_commit[repo_external_id]"'
-              req.body.must_match(/Content-Disposition: form-data;.+name="git_commit\[image\]"; filename="lolcommit.jpg.+"/)
-              req.body.must_match 'name="key"'
-              req.body.must_match 'name="t"'
-              req.body.must_match 'name="token"'
-              req.body.must_match 'aaa8e2404ef6013556db5a9828apikey'
-              req.body.must_match 'aaa8e2404ef6013556db5a9828repoid'
+              _(req.body).must_match 'name="git_commit[sha]"'
+              _(req.body).must_match 'name="git_commit[repo_external_id]"'
+              _(req.body).must_match(/Content-Disposition: form-data;.+name="git_commit\[image\]"; filename="lolcommit.jpg.+"/)
+              _(req.body).must_match 'name="key"'
+              _(req.body).must_match 'name="t"'
+              _(req.body).must_match 'name="token"'
+              _(req.body).must_match 'aaa8e2404ef6013556db5a9828apikey'
+              _(req.body).must_match 'aaa8e2404ef6013556db5a9828repoid'
             end
         end
       end
@@ -90,7 +90,7 @@ describe Lolcommits::Plugin::Dotcom do
           configured_plugin_options = plugin.configure_options!
         end
 
-        configured_plugin_options.must_equal({
+        _(configured_plugin_options).must_equal({
           enabled: true,
           api_key: "aaa8e2404ef6013556db5a9828apikey",
           api_secret: "aaa8e2404ef6013556db5a9apisecret",
@@ -101,12 +101,12 @@ describe Lolcommits::Plugin::Dotcom do
       describe "#valid_configuration?" do
         it "returns false for an invalid configuration" do
           plugin.configuration = { repo_id: "gibberish" }
-          plugin.valid_configuration?.must_equal false
+          _(plugin.valid_configuration?).must_equal false
         end
 
         it "returns true with a valid configuration" do
           plugin.configuration = valid_enabled_config
-          plugin.valid_configuration?.must_equal true
+          _(plugin.valid_configuration?).must_equal true
         end
       end
     end
