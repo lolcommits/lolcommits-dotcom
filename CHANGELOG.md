@@ -10,8 +10,8 @@ project adheres to [Semantic Versioning][Semver].
 - Your contribution here!
 
 ## [0.5.0] - 2020-01-23
-### Changed
-- Require at least Ruby 2.4
+### Removed
+- Support for Ruby < 2.4 (older rubies no longer supported)
 
 ## [0.4.0] - 2019-08-25
 ### Changed
