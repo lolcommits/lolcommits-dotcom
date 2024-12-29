@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 require "test_helper"
-require 'webmock/minitest'
+require "webmock/minitest"
 
 describe Lolcommits::Plugin::Dotcom do
-
   include Lolcommits::TestHelpers::GitRepo
   include Lolcommits::TestHelpers::FakeIO
 
@@ -12,7 +11,7 @@ describe Lolcommits::Plugin::Dotcom do
     def runner
       # a simple lolcommits runner with an empty configuration Hash
       @runner ||= Lolcommits::Runner.new(
-        lolcommit_path: Tempfile.new('lolcommit.jpg'),
+        lolcommit_path: Tempfile.new("lolcommit.jpg"),
       )
     end
 
@@ -23,8 +22,8 @@ describe Lolcommits::Plugin::Dotcom do
     def valid_enabled_config
       {
         enabled: true,
-        api_key: 'aaa8e2404ef6013556db5a9828apikey',
-        api_secret: 'aaa8e2404ef6013556db5a9apisecret',
+        api_key: "aaa8e2404ef6013556db5a9828apikey",
+        api_secret: "aaa8e2404ef6013556db5a9apisecret",
         repo_id: "aaa8e2404ef6013556db5a9828repoid"
       }
     end
@@ -32,7 +31,7 @@ describe Lolcommits::Plugin::Dotcom do
     describe "initalizing" do
       it "assigns runner and all plugin options" do
         _(plugin.runner).must_equal runner
-        _(plugin.options).must_equal [:enabled, :api_key, :api_secret, :repo_id]
+        _(plugin.options).must_equal [ :enabled, :api_key, :api_secret, :repo_id ]
       end
     end
 
@@ -61,15 +60,15 @@ describe Lolcommits::Plugin::Dotcom do
           assert_requested :post,
             "https://lolcommits.com/git_commits.json",
             times: 1,
-            headers: {'Content-Type' => /multipart\/form-data/ } do |req|
+            headers: { "Content-Type" => /multipart\/form-data/ } do |req|
               _(req.body).must_match 'name="git_commit[sha]"'
               _(req.body).must_match 'name="git_commit[repo_external_id]"'
               _(req.body).must_match(/Content-Disposition: form-data;.+name="git_commit\[image\]"; filename="lolcommit.jpg.+"/)
               _(req.body).must_match 'name="key"'
               _(req.body).must_match 'name="t"'
               _(req.body).must_match 'name="token"'
-              _(req.body).must_match 'aaa8e2404ef6013556db5a9828apikey'
-              _(req.body).must_match 'aaa8e2404ef6013556db5a9828repoid'
+              _(req.body).must_match "aaa8e2404ef6013556db5a9828apikey"
+              _(req.body).must_match "aaa8e2404ef6013556db5a9828repoid"
             end
         end
       end
@@ -78,12 +77,12 @@ describe Lolcommits::Plugin::Dotcom do
     describe "configuration" do
       it "allows plugin options to be configured" do
         # enabled, api_key, api_secret repo_id
-        inputs = %w(
+        inputs = %w[
           true
           aaa8e2404ef6013556db5a9828apikey
           aaa8e2404ef6013556db5a9apisecret
           aaa8e2404ef6013556db5a9828repoid
-        )
+        ]
         configured_plugin_options = {}
 
         fake_io_capture(inputs: inputs) do

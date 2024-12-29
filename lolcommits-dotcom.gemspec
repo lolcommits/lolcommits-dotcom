@@ -5,9 +5,9 @@ require 'lolcommits/dotcom/version'
 Gem::Specification.new do |spec|
   spec.name     = "lolcommits-dotcom"
   spec.version  = Lolcommits::Dotcom::VERSION
-  spec.authors  = ["Matthew Hutchinson"]
-  spec.email    = ["matt@hiddenloop.com"]
-  spec.summary  = %q{Uploads lolcommits to a remote server}
+  spec.authors  = [ "Matthew Hutchinson" ]
+  spec.email    = [ "matt@hiddenloop.com" ]
+  spec.summary  = %q(Uploads lolcommits to a remote server)
   spec.homepage = "https://github.com/lolcommits/lolcommits-dotcom"
   spec.license  = "LGPL-3.0"
 
@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata = {
     "homepage_uri"      => "https://github.com/lolcommits/lolcommits-dotcom",
+    "documentation_uri" => "https://gemdocs.org/gems/lolcommits-dotcom",
     "changelog_uri"     => "https://github.com/lolcommits/lolcommits-dotcom/blob/master/CHANGELOG.md",
     "source_code_uri"   => "https://github.com/lolcommits/lolcommits-dotcom",
     "bug_tracker_uri"   => "https://github.com/lolcommits/lolcommits-dotcom/issues",
@@ -28,12 +29,12 @@ Gem::Specification.new do |spec|
   spec.test_files    = `git ls-files -- {test,features}/*`.split("\n")
   spec.bindir        = "bin"
   spec.executables   = []
-  spec.require_paths = ["lib"]
+  spec.require_paths = [ "lib" ]
 
-  spec.required_ruby_version = ">= 2.4"
+  spec.required_ruby_version = ">= 3.1"
 
   spec.add_runtime_dependency "rest-client", ">= 2.1.0"
-  spec.add_runtime_dependency "lolcommits", ">= 0.14.2"
+  spec.add_runtime_dependency "lolcommits", ">= 0.17.2"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "webmock"

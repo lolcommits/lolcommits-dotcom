@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-require 'rest-client'
-require 'lolcommits/plugin/base'
+require "rest-client"
+require "lolcommits/plugin/base"
 
 module Lolcommits
   module Plugin
     class Dotcom < Base
-
-      BASE_URL = 'https://lolcommits.com'.freeze
+      BASE_URL = "https://lolcommits.com".freeze
 
       ##
       # Initialize plugin with runner, config and set all configurable options.
@@ -57,7 +56,7 @@ module Lolcommits
             git_commit: {
               sha: runner.sha,
               repo_external_id: configuration[:repo_id],
-              image: File.open(runner.lolcommit_path),
+              image: File.open(runner.lolcommit_path)
             },
             key: configuration[:api_key],
             t: t,
@@ -66,7 +65,7 @@ module Lolcommits
         )
       rescue => e
         log_error(e, "ERROR: HTTParty POST FAILED #{e.class} - #{e.message}")
-        return nil
+        nil
       end
 
 
@@ -78,7 +77,7 @@ module Lolcommits
       # @return [Array] the option names
       #
       def plugin_options
-        [:api_key, :api_secret, :repo_id]
+        [ :api_key, :api_secret, :repo_id ]
       end
     end
   end
