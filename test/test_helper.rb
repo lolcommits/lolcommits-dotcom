@@ -9,12 +9,9 @@ require "lolcommits"
 require "lolcommits/test_helpers/git_repo"
 require "lolcommits/test_helpers/fake_io"
 
-if ENV["COVERAGE"]
-  require "simplecov"
-end
-
 # plugin gem test libs
 require "lolcommits/dotcom"
+require "webmock/minitest"
 require "minitest/autorun"
 
 # swallow all debug output during test runs
